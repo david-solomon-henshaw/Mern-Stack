@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+// Require Book Model
+
 // require express package
 const express = require('express')
 
@@ -8,6 +10,10 @@ const mongoose = require('mongoose')
 
 //express app
 const app = express()
+
+// accessing body contents middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 const booksRouter = require('./routes/books')
 
