@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 const booksRouter = require('./routes/books')
-
+const userRouter = require('./routes/user')
 
 //middleware logger
 app.use((req,res,next) => {
@@ -26,7 +26,7 @@ app.use((req,res,next) => {
 
 
 app.use('/api/books', booksRouter)
-
+app.use('/api/user',userRouter)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

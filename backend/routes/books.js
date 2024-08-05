@@ -5,8 +5,6 @@ const router = express.Router()
 
 // import the controller functions
 const {getAllBooks, createBook, getBook, deleteBook, updateBook} =  require('../controllers/bookController')
-// import books model 
-const booksModel = require('../models/booksModel')
 
 
 //Get all books

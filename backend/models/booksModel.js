@@ -6,6 +6,12 @@ const Schema = mongoose.Schema
 
 // Create the Schema
 const bookSchema = new Schema({
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User"
+   },
     title: {
       type: String,
       required: [true, 'Title is required'],
