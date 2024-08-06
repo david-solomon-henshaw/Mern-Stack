@@ -3,20 +3,20 @@ const mongoose = require ('mongoose')
 
 const getAllBooks = async (req, res) => {
     try {
-        const books = await booksModel.find({}).sort({ createdAt: -1 })
+        const books = await booksModel.find({user:req.user.id}).sort({ createdAt: -1 })
         res.status(200).json({ books })
     }
     catch (error) {
         res.status(400).json({ error: "error occurred while trying to get all books" })
     }
 }
-
+ 
 
 const createBook = async (req, res) => {
 
     try {
         const { title, author, genre, status } = req.body
-        const book = await booksModel.create({ title, author, genre, status })
+        const book = await booksModel.create({ title, author, genre, status, user: req.user.id })
         res.status(200).json({ book })
     } catch (error) {
         res.status(400).json({ error: "error occured while trying to create a book" })
@@ -49,16 +49,24 @@ const deleteBook = async (req,res) => {
 
     try {
         const {id} = req.params
+        const userid = req.user.id
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({error: "Id is Invalid"})
         }
 
-        const book = await booksModel.findOneAndDelete({_id: id})
+
+
+        if (book.user === userid) {
+            const book = await booksModel.findOneAndDelete({_id: id})
+            
+        }
+
 
         if(!book) {
             return res.status(404).json({error: 'No such book with id'})
         }
+
 
         res.status(200).json({message: "book deleted successfully from database"})
 
